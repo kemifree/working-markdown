@@ -1,4 +1,41 @@
+
+
+<!-- toc orderedList:0 depthFrom:1 depthTo:6 -->
+
+* [pandas 原数据操作](#pandas-原数据操作)
+  * [pandas 实现rownumer组内排序](#pandas-实现rownumer组内排序)
+  * [pandas 重命名列](#pandas-重命名列)
+  * [pandas DataFrame & Series 遍历数据(loop iterate on data)](#pandas-dataframe-series-遍历数据loop-iterate-on-data)
+  * [遍历方法一：遍历列 df.iteritems():](#遍历方法一遍历列-dfiteritems)
+    * [遍历所有数据 range(len(df))](#遍历所有数据-rangelendf)
+    * [遍历行  df.iterrows():](#遍历行-dfiterrows)
+    * [遍历行 --df.itertuples():](#遍历行-dfitertuples)
+
+<!-- tocstop -->
+
 # pandas 原数据操作
+
+## pandas 实现rownumer组内排序
+```sql
+import pandas as pd
+date = pd.to_datetime(['2017-01-01','2017-01-05','2017-01-10','2017-01-12','2017-01-13'])
+temp = pd.DataFrame({'id':['a','a','a','b','b'],'date':date})
+temp['sort_id'] = temp['date'].groupby(temp['id']).rank()
+temp['shift'] = temp['date'].groupby(temp['id']).shift()
+temp
+```
+![](assets/markdown-img-paste-20170421103518183.png)
+
+## pandas 重命名列
+
+```python
+df = pd.DataFrame({'$a':[1,2], '$b': [10,20]})
+-- 方法一
+df.columns = ['a', 'b']
+-- 方法二
+df.rename(columns={'$a': 'a', '$b': 'b'}, inplace=True)
+```
+
 ## pandas DataFrame & Series 遍历数据(loop iterate on data)
 ```python
 #数据集
@@ -14,7 +51,7 @@ df
 2015-01-03  0.227220  0.245580 -1.573848 -0.727980
 >>>
 ```
-# 遍历方法一：遍历列 df.iteritems():
+## 遍历方法一：遍历列 df.iteritems():
 DataFrame.iteritems()    :Iterator over (column name, Series) pairs.
 ``` python
 >>> for colName,colSeries in df.iteritems():
@@ -104,3 +141,11 @@ DataFrame.itertuples(index=True)    :Iterate over the rows of DataFrame as tuple
 (0.22721956422657677, 0.24557994571203715, -1.5738481030018934, -0.72798003142334688)
 >>>
 ```
+##　pandas 将两列文本转换成一行文本
+Combine two columns of text in dataframe in pandas/python
+```python
+df = pd.DataFrame({'Year': ['2014', '2015'], 'quarter': ['q1', 'q2']})
+df['period'] = df[['Year', 'quarter']].apply(lambda x: ''.join(x), axis=1)
+```
+![](assets/markdown-img-paste-20170424152536848.png)
+参考教程：[combine-two-columns-of-text-in-dataframe-in-pandas-python](http://stackoverflow.com/questions/19377969/combine-two-columns-of-text-in-dataframe-in-pandas-python)
