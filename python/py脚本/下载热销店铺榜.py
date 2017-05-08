@@ -73,7 +73,7 @@ sys.path.append(python_path)
 from base_file import Base_file
 base  = Base_file() 
 
-username=u'波奇网旗舰店:zjq'
+username=u'********'
 password=u'a123456'
 login_info,driver = base.login_taobao_pv(username,password)
 

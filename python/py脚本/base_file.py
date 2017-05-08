@@ -144,7 +144,7 @@ class Base_file(object):
         
         return(temp_login_info,driver)
     
-    #username=u'波奇网旗舰店:zjq'
+    #username=u'********'
     
     #password=u'a123456'
        
